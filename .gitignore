@@ -31,3 +31,8 @@
 # Debug files
 *.dSYM/
 *.su
+esp8266_deauther/.DS_Store
+.DS_Store
+*.bin
+esp8266_deauther/user_interface.h
+web_server/data_h_temp

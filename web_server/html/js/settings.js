@@ -6,6 +6,7 @@ var macAp = getE('macAp');
 var randMacAp = getE('randMacAp');
 var apScanHidden = getE('apScanHidden');
 var scanTime = getE('scanTime');
+var autoAttack = getE('autoAttack');
 var timeout = getE('timeout');
 var deauthReason = getE('deauthReason');
 var packetRate = getE('packetRate');
@@ -38,6 +39,7 @@ function getData() {
 	randMacAp.checked = res.randMacAp;
 	apScanHidden.checked = res.apScanHidden;
 	scanTime.value = res.clientScanTime;
+	autoAttack.value = res.autoAttackAllAPs;
 	timeout.value = res.attackTimeout;
 	deauthReason.value = res.deauthReason;
 	packetRate.value = res.attackPacketRate;
@@ -62,6 +64,7 @@ function saveSettings() {
   url += "&randMacAp=" + randMacAp.checked;
   url += "&apScanHidden=" + apScanHidden.checked;
   url += "&scanTime=" + scanTime.value;
+  url += "&autoAttack=" + autoAttack.checked;
   url += "&timeout=" + timeout.value;
   url += "&deauthReason=" + deauthReason.value;
   url += "&packetRate=" + packetRate.value;
